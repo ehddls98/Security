@@ -20,7 +20,7 @@ public class ParamsPrintAspect {
     public Object around(ProceedingJoinPoint proceedingJoinPoint) throws Throwable {
         CodeSignature signature = (CodeSignature) proceedingJoinPoint.getSignature();
         String[] paramNames = signature.getParameterNames(); //매개변수명
-        Object[] args = proceedingJoinPoint.getArgs(); //매개변수
+        Object[] args = proceedingJoinPoint.getArgs(); //변수
 
         //getDeclaringType: 클래스명, getSimpleName: 경로 빼고 출력 ,getName: 메서드명
         String infoPrint = "ClassName(" + signature.getDeclaringType().getSimpleName() + ") MethodName(" + signature.getName() + ")";

@@ -1,14 +1,21 @@
 package com.study.SpringSecurity.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @EnableWebSecurity // 직접 SecurityConfig를 설정하겠다.
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Bean //암호화를 할때마다 엔코더를 생성하지 않기 위해 bean으로 등록
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override //서버가 실행되면 실행되는 초기 세팅들
     protected void configure(HttpSecurity http) throws Exception {
@@ -23,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         //스프링 시큐리티가 세션을 생성하지 않겠다. 기존의 세션을 완전히 사용하지 않겠다는 뜻은 아님.
         //JWT 등의 토큰 인증방식을 사용할 때 설정하는 것.
 
-        http.cors(); //crossOrigin(다른 서버에서 요청) 사용
+        http.cors(); //crossOrigin(다른 서버에서 요청 허용) 사용
         http.authorizeRequests() 
                 .antMatchers("/auth/**", "/h2-console/**", "/test/**") //요청을 받을 주소
                 .permitAll() //antMatchers 설정한 주소의 접근을 인증절차 없이 허용

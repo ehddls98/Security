@@ -26,7 +26,7 @@ public class TimePrintAspect {
         Object result = proceedingJoinPoint.proceed();
         stopWatch.stop();
 
-        //getDeclaringType: 클래스명, getSimpleName: 경로 빼고 출력 ,getName: 메서드명
+        //getDeclaringType: 클래스경로, getSimpleName: 경로 빼고 출력 ,getName: 메서드명
         String infoPrint = "ClassName(" + signature.getDeclaringType().getSimpleName() + ") MethodName(" + signature.getName() + ")";
         String linePrint = "";
         for(int i = 0; i < infoPrint.length(); i++) {
